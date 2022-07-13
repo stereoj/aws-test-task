@@ -1,8 +1,7 @@
 # Creating VPC
 resource "aws_vpc" "awslab-vpc" {
 
-  cidr_block = "172.16.0.0/16"
-
+  cidr_block = var.vpc_cidr_block
   # Enabling automatic hostname assigning
   enable_dns_hostnames = true
   tags = {
@@ -19,9 +18,9 @@ resource "aws_subnet" "awslab-subnet-public" {
 
   vpc_id = aws_vpc.awslab-vpc.id
 
-  cidr_block = "172.16.1.0/24"
+  cidr_block = var.public_cidr_block
 
-  availability_zone = "eu-central-1a"
+  availability_zone = var.public_availability_zone
 
   map_public_ip_on_launch = true
 
@@ -39,9 +38,9 @@ resource "aws_subnet" "awslab-subnet-private" {
 
   vpc_id = aws_vpc.awslab-vpc.id
 
-  cidr_block = "172.16.2.0/24"
+  cidr_block = var.private_cidr_block
 
-  availability_zone = "eu-central-1b"
+  availability_zone = var.private_availability_zone
 
   tags = {
     Name = "awslab-subnet-private"
@@ -72,7 +71,7 @@ resource "aws_route_table" "Public-Subnet-RT" {
 
   # NAT Rule
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block = var.nat_cidr_block
     gateway_id = aws_internet_gateway.Internet_Gateway.id
   }
 

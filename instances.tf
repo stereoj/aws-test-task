@@ -25,7 +25,7 @@ resource "aws_instance" "webserver" {
   ]
 
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
+  instance_type = var.instance_type
   key_name      = aws_key_pair.generated_key.key_name
   subnet_id     = aws_subnet.awslab-subnet-public.id
 
@@ -50,7 +50,7 @@ resource "aws_instance" "MySQL" {
   ]
 
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
+  instance_type = var.instance_type
   key_name      = aws_key_pair.generated_key.key_name
   subnet_id     = aws_subnet.awslab-subnet-private.id
 
